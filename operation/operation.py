@@ -20,6 +20,8 @@ class Operation():
         print(cmd)
         for row in cur.execute(cmd):
             data.append(row)
+        get_db().commit()
+
         return data
 
     def db_insert(self, table, columns, values):
@@ -30,24 +32,44 @@ class Operation():
         :param values: values to be inserted
         :return:
         '''
-        pass
+        cur = get_db().cursor()
+        cmd = "INSERT INTO " + table + " " + columns + " VALUES " + values
+        print(cmd)
+        cur.execute(cmd)
+        get_db().commit()
 
-    def db_update(self, table, columns, values, constraint):
+        print("insert successfully")
+
+
+    def db_update(self, table, columns, values, constraint=""):
         '''
         
         :param table: 
-        :param columns: 
-        :param values: 
+        :param columns:
+        :param values:
         :param constraint: 
         :return: 
         '''
-        pass
+        cur = get_db().cursor()
+        cmd = "UPDATE " + table + " SET " + columns + " = " + values + constraint
+        print(cmd)
+        cur.execute(cmd)
+        get_db().commit()
 
-    def db_delete(self, table, constraint):
+        print("update successfully")
+
+
+    def db_delete(self, table, constraint=""):
         '''
 
         :param table:
         :param constraint:
         :return:
         '''
-        pass
+        cur = get_db().cursor()
+        cmd = "DELETE FROM " + table + constraint
+        print(cmd)
+        cur.execute(cmd)
+        get_db().commit()
+
+        print("delete successfully")
