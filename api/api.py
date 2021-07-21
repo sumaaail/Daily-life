@@ -1,13 +1,7 @@
 from operation.operation import Operation
 
 
-def demo_select(cmd):
-    table = 'students'
-    columns = ['NAME', 'ADDRESS']
-    constraint = ' where ' + 'ID = 2'
-    op = Operation()
-    data = op.db_select(table, columns, constraint)
-    return data
+
 
 
 # UserLogin and registration
@@ -79,8 +73,8 @@ def delete_account_by_uname(cmd):
 # input the values for save favourites
 def insert_fav(cmd):
     table = 'fav'
-    columns = ['uid', 'fav']
-    values = cmd
+    columns = str(('uid', 'fav'))
+    values = str(tuple(cmd))
     op = Operation()
     op.db_insert(table, columns, values)
     return 1
@@ -89,7 +83,7 @@ def insert_fav(cmd):
 # input the uid to fetch the fav
 def select_fav_by_uid(cmd):
     table = 'fav'
-    column = ['fav']
+    column = str(('fav',))
     constraint = ' WHERE uid = {}'.format(cmd)
     op = Operation()
     data = op.db_select(table, column, constraint)
@@ -97,4 +91,48 @@ def select_fav_by_uid(cmd):
 
 
 #########################################################################################################
+
+import time
+import pandas as pd
+import newspaper
+from newspaper import Article
+from newspaper import news_pool
+from newspaper import fulltext
+
+def get_news(paper, num):
+    print("begin to fetch {}".format(paper.brand))
+    news_title = []
+    news_text = []
+    op = Operation
+    table = "news"
+    columns = str(('title', 'text'))
+
+    for article in paper.articles[:num]:
+        time.sleep(0.01)
+
+        for i in range(6):
+            try:
+
+                atc = Article(article.url)
+                atc.download()
+                atc.parse()
+                print(atc.title)
+                values = str((atc.title,atc.text))
+                op.db_insert(table, columns, values)
+                # news_title.append(atc.title)
+                # news_text.append(atc.text)
+                break
+            except Exception as e:
+                if i > 5:
+
+                    print(e)
+                    break
+                else:
+                    time.sleep(0.5)
+    print("cache complete")
+    # paper_data = pd.DataFrame({'title': news_title, 'text': news_text})
+    # return paper_data
+    # paper_data.to_csv('{}_news.txt'.format(paper.brand))
+    # print("news saved")
+
 
