@@ -9,7 +9,7 @@ import numpy as np
 # load stop words
 def get_stopword_list():
     stop_word_path = 'stopword.txt'
-    stopword_list = [sw.replace('\n','') for sw in open(stop_word_path).readlines()]
+    stopword_list = [sw.replace('\n','') for sw in open(stop_word_path,encoding="utf-8").readlines()]
     return stopword_list
 
 # token
@@ -58,7 +58,7 @@ def load_data(pos=False, corpus_path='corpus.txt'):
     :return:
     '''
     doc_list = []
-    for line in open(corpus_path, 'r'):
+    for line in open(corpus_path, 'r',encoding="utf-8"):
         content = line.strip() # get data of each line
         seg_list = seg_to_list(content,pos) # tokenization
         filter_list = word_filter(seg_list,pos) # filter the stopword

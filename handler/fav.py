@@ -10,21 +10,26 @@ def fav_index():
     return jsonify(data)
 
 
-@fav.route('/savefav',methods=['GET'])
+@fav.route('/savefav',methods=['GET', 'POST'])
 def savefav():
-    uid = select_id_by_uname(request.form['uname'])
-    fav = request.form['fav']
+    data_rcv = request.data
+    data2str = str(data_rcv, encoding="utf-8")
+    dic = eval(data2str)
+    uid = select_id_by_uname(dic['username'])
+    fav = dic['fav']
     values = [uid,fav]
     state = insert_fav(values)
     if state:
-        return "fav added successfully"
-    return "error occurs when adding fav"
+        return "0"  # fav added successfully
+    return "1"  # error occurs when adding fav
 
 
-@fav.route('/fetchfav',methods=['GET'])
+@fav.route('/fetchfav',methods=['GET', 'POST'])
 def fetchfav():
-    # uid = select_id_by_uname(request.form['uname'])
-    uid = select_id_by_uname('sumail')
+    data_rcv = request.data
+    data2str = str(data_rcv, encoding="utf-8")
+    dic = eval(data2str)
+    uid = select_id_by_uname(dic['username'])
     data = select_fav_by_uid(uid[0][0])
     return jsonify(data)
 

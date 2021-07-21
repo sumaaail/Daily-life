@@ -56,10 +56,10 @@ def select_pwd_by_uname(cmd):
 
 
 # input the values for registration
-def register(cmd):
+def user_register(cmd):
     table = 'user'
-    columns = ['uname', 'pwd', 'phone']
-    values = cmd
+    columns = str(('uname', 'pwd', 'phone'))
+    values = str(tuple(cmd))
     op = Operation()
     op.db_insert(table, columns, values)
     return 1

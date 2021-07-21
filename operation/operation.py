@@ -24,7 +24,7 @@ class Operation():
 
         return data
 
-    def db_insert(self, table, columns, values):
+    def db_insert(self, table, columns="", values=""):
         '''
 
         :param table: table name

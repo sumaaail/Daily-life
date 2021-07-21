@@ -1,6 +1,6 @@
 from function_extract import *
 if __name__ == '__main__':
-    with open('testdata.txt','r') as f:
+    with open('test1.txt','r',encoding="utf-8") as f:
         lines = f.readlines()
     text = ''
     for line in lines:

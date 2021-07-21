@@ -1,5 +1,5 @@
 import jieba.analyse
-with open('corpus.txt','r') as f:
+with open('corpus.txt','r',encoding="utf-8") as f:
     lines = f.readlines()
 text = ''
 for line in lines:
